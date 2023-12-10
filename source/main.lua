@@ -9,7 +9,7 @@ local geo <const> = playdate.geometry
 local lifecounter = {
    {life = 40, maxlife = 10, playerID = 1},
    {life = 40, maxlife = 10, playerID = 2},
-   {life = 36, maxlife = 10, playerID = 3},
+   {life = 40, maxlife = 10, playerID = 3},
    {life = 40, maxlife = 10, playerID = 4}
 }
 
@@ -32,29 +32,83 @@ for i = 1, #rects do
   --gfx.drawTextInRect(tostring(lifecounter[i].life),rects[i] ,nil,nil ,kTextAlignment.center,newfont)
 end
 function drawlifecounter(x,y,angle,number)
-local rotate = gfx.image.new(190,120)
-local rect = geo.rect.new(0, 20, 190, 100)
+local rotate = gfx.image.new(200,101)
+local rect = geo.rect.new(5, 20, 190, 100)
 gfx.pushContext(rotate)
     gfx.setColor(gfx.kColorBlack)
-    gfx.setFont(newfont)
-    gfx.drawRect(rect)
-    rect:inset(10,10)
-    gfx.drawTextInRect(tostring(lifecounter[2].life),rect,nil,nil ,kTextAlignment.center)
-gfx.popContext()
+  
+
+    -- Dither Background
+    gfx.pushContext()
+        gfx.setDitherPattern(0.5, gfx.image.kDitherTypeAtkinson)
+        gfx.fillRoundRect(rect,20)
+    gfx.popContext()
+
+    --Border 
+    gfx.pushContext()
+      gfx.setLineWidth(4)
+      gfx.drawRoundRect(rect,20)
+    gfx.popContext()
+
+
+    gfx.drawTextInRect("Player ".. number,0,0,200,20,nil,nil ,kTextAlignment.center)
+    --Text
+    gfx.pushContext()
+        gfx.setFont(newfont)
+        rect:inset(0,10)
+        gfx.drawTextInRect(tostring(lifecounter[number].life),rect,nil,nil ,kTextAlignment.center)
+    gfx.popContext()
+gfx.popContext()     
 rotate:drawRotated(x,y,angle) 
 end
 
+function UpdateCounter()
+    gfx.clear()
+    drawlifecounter(200,190,0,1)
+    drawlifecounter(350,120,270,2)
+
+    drawlifecounter(200,50,180,3)
+    drawlifecounter(50,120,90,4)
+end
+UpdateCounter()
+
 function playdate.update() 
-  
-    drawlifecounter(200,60,180)
-    drawlifecounter(200,180,0)
-    drawlifecounter(60,120,90)
-    drawlifecounter(340,120,270)
+
+   if playdate.buttonIsPressed( "up" ) then
+     HandleLife(3) 
+   end
+   if playdate.buttonIsPressed("down") then
+    HandleLife(1)
+   end
+   if playdate.buttonIsPressed( "right" ) then
+    HandleLife(2) 
+  end
+  if playdate.buttonIsPressed("left") then
+   HandleLife(4)
+  end
+
+  --HandleLife(1)
 
     playdate.timer:updateTimers()
 end
 
+function HandleLife(number)
+    if playdate.buttonJustPressed("a") then
+        lifecounter[number].life = lifecounter[number].life + 1
+        UpdateCounter()
+    end
 
+    if playdate.buttonJustPressed("b") then
+        lifecounter[number].life = lifecounter[number].life -1
+        if lifecounter[number].life <= 0 then
+            lifecounter[number].life = 0
+        end
+        UpdateCounter()
+    end
+
+   
+
+end
 
    
     
