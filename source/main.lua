@@ -7,9 +7,9 @@ local gfx <const> = playdate.graphics
 local dspl <const> = playdate.display
 local geo <const> = playdate.geometry
 local lifecounter = {
-   {life = 40, maxlife = 10, playerID = 1, button = "up",isSelect = false},
+   {life = 40, maxlife = 10, playerID = 3, button = "up",isSelect = false},
    {life = 40, maxlife = 10, playerID = 2, button = "right",isSelect = false},
-   {life = 40, maxlife = 10, playerID = 3, button = "down", isSelect = false},
+   {life = 40, maxlife = 10, playerID = 1, button = "down", isSelect = false},
    {life = 40, maxlife = 10, playerID = 4, button = "left", isSelect = false}
 }
 
@@ -38,12 +38,13 @@ function drawlifecounter(x,y,angle,playerID)
         -- Dither Background
         if(lifecounter[playerID].isSelect) then
             gfx.pushContext()
-                gfx.setColor(gfx.kColorBlack)
-                gfx.setDitherPattern(0.5, gfx.image.kDitherTypeAtkinson)
-                gfx.fillRoundRect(rect,20)
+            gfx.setColor(gfx.kColorBlack)
+            gfx.setDitherPattern(0.75, gfx.image.kDitherTypeDiagonalLine)
+            gfx.fillRoundRect(rect,20)
             gfx.popContext()
-            print("isSelect" .. playerID)
         end
+
+     
     
         --Border 
         gfx.pushContext()
@@ -71,13 +72,14 @@ function UpdateCounter()
     drawlifecounter(200,50,180,3)
     drawlifecounter(50,120,90,4)
 end
-UpdateCounter()
 
+UpdateCounter() 
 function playdate.update() 
 
     for i , player in pairs(lifecounter) do
         if playdate.buttonIsPressed(player.button) then
-            lifecounter[player.playerID].isSelect = true  
+            lifecounter[player.playerID].isSelect = true 
+            UpdateCounter() 
             for i, operation in pairs(operations) do
                 if playdate.buttonJustPressed(operation.button) then
                     ChangeLife(operation.sign,player.playerID) 
@@ -85,8 +87,9 @@ function playdate.update()
             end   
         end
 
-        if playdate.buttonJustReleased(player.button) then
+        if playdate.buttonJustReleased(player.button)  then
             lifecounter[player.playerID].isSelect = false
+            UpdateCounter()
         end
        
     end
