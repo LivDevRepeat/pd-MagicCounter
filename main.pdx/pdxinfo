@@ -1,9 +1,0 @@
-name=Game Name
-author=Author Name
-description=This is a Playdate game.
-bundleID=com.domain.GameName
-version=1.0
-imagePath=SystemAssets/
-buildNumber=20
-pdxversion=20100
-buildtime=755289992

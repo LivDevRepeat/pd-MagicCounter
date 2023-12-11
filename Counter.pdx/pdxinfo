@@ -5,3 +5,5 @@ bundleID=com.livdevrepeat.MagicCounter
 version=0.3
 imagePath=source/title.gif
 buildNumber=326
+pdxversion=20100
+buildtime=755630757

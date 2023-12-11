@@ -7,10 +7,10 @@ local gfx <const> = playdate.graphics
 local dspl <const> = playdate.display
 local geo <const> = playdate.geometry
 local lifecounter = {
-   {life = 40, maxlife = 10, playerID = 1},
-   {life = 40, maxlife = 10, playerID = 2},
-   {life = 40, maxlife = 10, playerID = 3},
-   {life = 40, maxlife = 10, playerID = 4}
+   {life = 40, maxlife = 10, playerID = 1, button = "up",isSelect = false},
+   {life = 40, maxlife = 10, playerID = 2, button = "right",isSelect = false},
+   {life = 40, maxlife = 10, playerID = 3, button = "down", isSelect = false},
+   {life = 40, maxlife = 10, playerID = 4, button = "left", isSelect = false}
 }
 
 local rects ={
@@ -20,46 +20,47 @@ local rects ={
     playdate.geometry.rect.new(280, 20, 120, 200)
 }
 
-local newfont = gfx.font.new("Marble Madness- 80pxNum")
+local newfont = gfx.font.new("fonts/Marble Madness- 80pxNum")
 local rectimage = gfx.image.new(120,200) 
 
+local operations ={
+    {button = "a" ,sign = -1},
+    {button = "b", sign = 1}
+} 
+
+function drawlifecounter(x,y,angle,playerID)
+    local rotate = gfx.image.new(200,101)
+    local rect = geo.rect.new(5, 20, 190, 100)
+    gfx.pushContext(rotate)
+        gfx.setColor(gfx.kColorBlack)
+    
+
+        -- Dither Background
+        if(lifecounter[playerID].isSelect) then
+            gfx.pushContext()
+                gfx.setColor(gfx.kColorBlack)
+                gfx.setDitherPattern(0.5, gfx.image.kDitherTypeAtkinson)
+                gfx.fillRoundRect(rect,20)
+            gfx.popContext()
+            print("isSelect" .. playerID)
+        end
+    
+        --Border 
+        gfx.pushContext()
+        gfx.setLineWidth(4)
+        gfx.drawRoundRect(rect,20)
+        gfx.popContext()
 
 
-for i = 1, #rects do  
-   --gfx.drawRect(rects[i])
-  -- rects[i]:inset(8, 8)
-   
-  --gfx.drawTextInRect(tostring(lifecounter[i].life),rects[i] ,nil,nil ,kTextAlignment.center,newfont)
-end
-function drawlifecounter(x,y,angle,number)
-local rotate = gfx.image.new(200,101)
-local rect = geo.rect.new(5, 20, 190, 100)
-gfx.pushContext(rotate)
-    gfx.setColor(gfx.kColorBlack)
-  
-
-    -- Dither Background
-    gfx.pushContext()
-        gfx.setDitherPattern(0.5, gfx.image.kDitherTypeAtkinson)
-        gfx.fillRoundRect(rect,20)
-    gfx.popContext()
-
-    --Border 
-    gfx.pushContext()
-      gfx.setLineWidth(4)
-      gfx.drawRoundRect(rect,20)
-    gfx.popContext()
-
-
-    gfx.drawTextInRect("Player ".. number,0,0,200,20,nil,nil ,kTextAlignment.center)
-    --Text
-    gfx.pushContext()
-        gfx.setFont(newfont)
-        rect:inset(0,10)
-        gfx.drawTextInRect(tostring(lifecounter[number].life),rect,nil,nil ,kTextAlignment.center)
-    gfx.popContext()
-gfx.popContext()     
-rotate:drawRotated(x,y,angle) 
+        gfx.drawTextInRect("Player ".. playerID,0,0,200,20,nil,nil ,kTextAlignment.center)
+        --Text
+        gfx.pushContext()
+            gfx.setFont(newfont)
+            rect:inset(0,10)
+            gfx.drawTextInRect(tostring(lifecounter[playerID].life),rect,nil,nil ,kTextAlignment.center)
+        gfx.popContext()
+    gfx.popContext()     
+    rotate:drawRotated(x,y,angle) 
 end
 
 function UpdateCounter()
@@ -74,40 +75,31 @@ UpdateCounter()
 
 function playdate.update() 
 
-   if playdate.buttonIsPressed( "up" ) then
-     HandleLife(3) 
-   end
-   if playdate.buttonIsPressed("down") then
-    HandleLife(1)
-   end
-   if playdate.buttonIsPressed( "right" ) then
-    HandleLife(2) 
-  end
-  if playdate.buttonIsPressed("left") then
-   HandleLife(4)
-  end
+    for i , player in pairs(lifecounter) do
+        if playdate.buttonIsPressed(player.button) then
+            lifecounter[player.playerID].isSelect = true  
+            for i, operation in pairs(operations) do
+                if playdate.buttonJustPressed(operation.button) then
+                    ChangeLife(operation.sign,player.playerID) 
+                end
+            end   
+        end
 
-  --HandleLife(1)
+        if playdate.buttonJustReleased(player.button) then
+            lifecounter[player.playerID].isSelect = false
+        end
+       
+    end
 
-    playdate.timer:updateTimers()
 end
 
-function HandleLife(number)
-    if playdate.buttonJustPressed("a") then
-        lifecounter[number].life = lifecounter[number].life + 1
-        UpdateCounter()
+
+function ChangeLife(sign,playerID)
+    lifecounter[playerID].life = lifecounter[playerID].life + 1 * sign
+    if lifecounter[playerID].life <= 0 then
+        lifecounter[playerID].life = 0
     end
-
-    if playdate.buttonJustPressed("b") then
-        lifecounter[number].life = lifecounter[number].life -1
-        if lifecounter[number].life <= 0 then
-            lifecounter[number].life = 0
-        end
-        UpdateCounter()
-    end
-
-   
-
+    UpdateCounter()
 end
 
    
