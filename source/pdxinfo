@@ -4,4 +4,4 @@ description=This is a Playdate game.
 bundleID=com.livdevrepeat.MagicCounter
 version=0.5
 imagePath=launcher/
-buildNumber=437
+buildNumber=439
