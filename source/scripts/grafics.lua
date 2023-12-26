@@ -1,27 +1,4 @@
 local gfx <const> = playdate.graphics
-local tableType = {
-    -- Table type 1: 4 Players Round
-    {
-        draw = function()
-            drawlifecounter(200, 190, 0, 1)
-            drawlifecounter(350, 120, 270, 2)
-            drawlifecounter(200, 50, 180, 3)
-            drawlifecounter(50, 120, 90, 4)
-        end,
-        title = "4 Players Round",
-    },
-    -- Table type 2: 4 Players Square
-    {
-        draw = function()
-            drawlifecounter(100, 190, 0, 1)
-            drawlifecounter(300, 190, 0, 2)
-            drawlifecounter(300, 50, 180, 3)
-            drawlifecounter(100, 50, 180, 4)
-        end,
-        title = "4 Players Square",
-    }
-}
-
 
 function drawlifecounter(x, y, angle, lifecounter)
     local rotate = gfx.image.new(200, 101)
