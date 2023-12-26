@@ -1,19 +1,11 @@
-# Playdate VS Code Template (Mac)
-Build and run projects in the Playdate simulator with a key shortcut.
+# COMMANDER MAGIC COUNTER
+![TableSquare mode](https://github.com/LivDevRepeat/pd-MagicCounter/assets/59557987/e27c4ca6-d896-4084-8224-3fa30844406a)
+![Table Mode](https://github.com/LivDevRepeat/pd-MagicCounter/assets/59557987/4bc49f6f-0b3d-4a68-b772-d2178e8828ab)
 
-## Requirements
-- [VS Code](https://code.visualstudio.com)
-- [Node](https://nodejs.org/)
-- [Playdate SDK](https://play.date/dev/)
+## Recources 
+Fonts:  
+- [Marble Madnes](https://idleberg.github.io/playdate-arcade-fonts/try/Marble%20Madness)
 
-## Get Started
-**This is a template repo.**  
-You can generate your own separate repositories from this template with the same directory structure, branches, and files. Click "Use this template" to create your own repo.
-
-1. Clone or download the repo.
-2. In VS Code, choose Run > Run Without Debugging to launch the project in the Playdate simulator.
-3. Assign a keyboard shortcut to the Run Without Debugging option to build and run with a keypress.
-
-## Output
-Build files get output to `bin/Output.pdx`.  
-Change this by editing the `playdate.output` property in `.vscode/settings.json`.
+Tools: 
+- [Playdate Caps](https://play.date/caps/)
+- [Pixly](https://play.google.com/store/apps/details?id=com.meltinglogic.pixly&hl=en&gl=US)
