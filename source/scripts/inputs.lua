@@ -16,3 +16,15 @@ local baseInputHandlers = {
     AButtonDown = function() cycleView() end,
     BButtonDown = function() cylcelMode() end,
 }
+
+
+
+function ResetCurrentDirection()
+    playdate.inputHandlers.pop()
+    currentDirection = 0
+end
+
+function SetCurrentDirection(dir)
+    currentDirection = dir
+    playdate.inputHandlers.push(selectedDirInputHandlers)
+end

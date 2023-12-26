@@ -1,26 +1,25 @@
-local player = {}
+ PlayersController = {}
+PlayersController.new = function()
+    local self = {}
 
-function addPlayer(startlife, label)
-    player[#player + 1] = {life = startlife, label = label}
+     self.Players = {}
+    
+    function self.AddPlayer(startlife, label)
+        local Players = self.Players
+       Players[#Players + 1] = {life = startlife, label = label, commanderDamage = {} }
+        print("Player " .. #Players .. " added")
+    end
+
+
+    return self
 end
 
--- Load game data
-local gameData = playdate.datastore.read()
-if gameData then
-    player = gameData.players
-end
 
--- Function to save game data
-function saveGameData()
-    local gameData = {players = players}
-    playdate.datastore.write(gameData)
-end
 
--- Lifecycle Event Handlers
-function playdate.gameWillTerminate()
-    saveGameData()
-end
 
-function playdate.gameWillSleep()
-    saveGameData()
-end
+
+
+
+
+    
+

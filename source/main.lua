@@ -17,52 +17,51 @@ local b_sign = 1
 
 -- UI setup
 playdate.setAutoLockDisabled(true)
-local newfont = gfx.font.new("fonts/Marble Madness- 80pxNum")
+
 
 -- System Menu
 local menu = playdate.getSystemMenu()
 menu:addMenuItem("New Game", function() Reset() end)
 
--- Main update function
+import "scripts/data"
+
+-- PlayerController Class
+local pc = PlayersController.new()
+pc.AddPlayer(40, "Pia")
+pc.AddPlayer(40, "Lina")
+
+pc.Players[1].commanderDamage[1] = 0
+
+print(pc.Players[1].label .. " has " .. pc.Players[1].life .. " life")
+
+
+-- Load game data
+local gameData = playdate.datastore.read()
+if gameData then
+    player = gameData.players
+end
+
+-- Function to save game data
+function saveGameData()
+    local gameData = {players = players}
+    playdate.datastore.write(gameData)
+end
+
+-- Lifecycle Event Handlers
+function playdate.gameWillTerminate()
+    saveGameData()
+end
+
+function playdate.gameWillSleep()
+    saveGameData()
+end
+
+
 function playdate.update()
-   -- UpdateCounter()
-end
-
--- Reset game state
-function Reset()
-    lifecounters = {
-        {life = 40, label = "Player 1", playerID = 1, button = 1},
-        {life = 20, label = "Commander Damage", playerID = 1, button = 2},
-        {life = 40, label = "Player 2", playerID = 3, button = 3},
-        {life = 20, label = "Commander Damage", playerID = 3, button = 4},
-    }
-    UpdateCounter()
-end
-
--- Update counter display
-function UpdateCounter()
-    gfx.clear()
-    tableType[currentView].draw()
-end
-
-
--- Additional functions
-
-
-function ResetCurrentDirection()
-    playdate.inputHandlers.pop()
-    currentDirection = 0
-end
-
-function SetCurrentDirection(dir)
-    currentDirection = dir
-    playdate.inputHandlers.push(selectedDirInputHandlers)
+    -- Update game logic here
 end
 
 
 
--- Initialize input handlers
 
 
--- Initial update call
-UpdateCounter()
