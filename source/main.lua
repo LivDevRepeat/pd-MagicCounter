@@ -61,9 +61,7 @@ local tableType = {
     {
         draw = function()
             drawlifecounter(200, 190, 0, "Pia", "40")
-            --drawlifecounter(350, 120, 270, 2)
-            --drawlifecounter(200, 50, 180, 3)
-            --drawlifecounter(50, 120, 90, 4)
+          
         end,
         title = "4 Players Round",
     },
@@ -80,8 +78,10 @@ local tableType = {
 }
 
 
-drawlifecounter(200, 190, 0, "Pia", "40")
-
+drawlifecounter(200, 190, 0,0.9, "Pia", 1200, false)
+drawlifecounter(350, 120, 270, 0.9,"Pia", "4", false)
+drawlifecounter(200, 50, 180,0.9, "Pia", "40", false)
+drawlifecounter(50, 120, 90,0.9, "Pia", "40", false)
 
 function playdate.update()
     -- Update game logic here
