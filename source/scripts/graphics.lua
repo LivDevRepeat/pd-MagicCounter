@@ -6,7 +6,7 @@ local twoCharWidth = newfont:getTextWidth("00")
 
 
 
-function drawlifecounter(x, y, angle,scale, labelText, lifecounter,commanderdamage)
+function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage)
    
     -- Images
     local rotate = gfx.image.new(200, 121)
@@ -70,7 +70,7 @@ function drawlifecounter(x, y, angle,scale, labelText, lifecounter,commanderdama
  
        -- Bubbles 
 
-        local bubbleWidth = 45
+        local bubbleWidth = 60
         local bubbleHeight = 30
         local bubble =  gfx.image.new(190,bubbleHeight)
         gfx.pushContext(bubble)
@@ -84,23 +84,17 @@ function drawlifecounter(x, y, angle,scale, labelText, lifecounter,commanderdama
                 gfx.pushContext()
                     gfx.setColor(gfx.kColorBlack)
                     gfx.setLineWidth(2)
-                    gfx.drawRect(bubbleRect)
-                    bubbleRect:inset(0, 3)
+                    gfx.drawRoundRect(bubbleRect,5)
+                    bubbleRect:inset(0, 5)
                     gfx.drawTextInRect(tostring(commanderdamage[i]), bubbleRect, nil, nil, kTextAlignment.center)
                 gfx.popContext()
             end
         gfx.popContext()
-
         bubble:draw(5,0)
-     
-
     gfx.popContext()
 
    
-   -- rotate = rotate:scaledImage(scale)
-   rotate:drawRotated(x, y, angle)
-   -- rotate = rotate:rotatedImage(angle)
-   -- rotate:draw(x, y)     
+   rotate:drawRotated(posconfig.x, posconfig.y, posconfig.angle, posconfig.scale)  
  end
 
 

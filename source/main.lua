@@ -24,6 +24,11 @@ playdate.setAutoLockDisabled(true)
 local menu = playdate.getSystemMenu()
 menu:addMenuItem("New Game", function() Reset() end)
 
+menu:addOptionsMenuItem("Player", {1,2,3,4}, 1, function(value)
+    print(value)
+   end
+   )
+
 import "scripts/data"
 import "scripts/graphics"
 
@@ -56,48 +61,80 @@ function playdate.gameWillSleep()
     saveGameData()
 end
 
+playercount = 2
 
-local tableType = {
+local posconfigs = {
     -- Table type 1: 4 Players Round
     {
-        draw = function()
-            drawlifecounter(200, 190, 0, "Pia", "40")
-          
-        end,
-        title = "4 Players Round",
+        {x = 200, y = 190, angle = 0, scale = 1},
+        {x = 350, y = 120, angle = 270, scale = 1},
+        {x = 200, y = 50, angle = 180, scale = 1},
+        {x = 50, y = 120, angle = 90, scale = 1},
     },
     -- Table type 2: 4 Players Square
     {
-        draw = function()
-            drawlifecounter(100, 190, 0, 1)
-            drawlifecounter(300, 190, 0, 2)
-            drawlifecounter(300, 50, 180, 3)
-            drawlifecounter(100, 50, 180, 4)
-        end,
-        title = "4 Players Square",
-    }
+        {x = 100, y = 190, angle = 0, scale = 1},
+        {x = 300, y = 190, angle = 0, scale = 1},
+        {x = 300, y = 50, angle = 180, scale = 1},
+        {x = 100, y = 50, angle = 180, scale = 1},
+    },
+    -- Table type 3: 2 Players
+    {
+        {x = 322, y = 120, angle = 270, scale = 1.3},
+        {x = 78, y = 120, angle = 90, scale = 1.3},
+    },
 }
-
-
-drawlifecounter(200, 190, 0,0.9, "Pia", 120, {})
-drawlifecounter(350, 120, 270, 0.9,"Pia", 40, {})
-drawlifecounter(200, 50, 180,0.9, "Pia", 4, {})
-drawlifecounter(50, 120, 90,0.9, "Pia", 40, {})
 
 local debuglife = 40
-local debugCommanderDamege = 67
+local debugCommanderDamege = 20
+
+
+
+
+
+local menuOptions = { 1,2,3,4}
+local listview = playdate.ui.gridview.new(50,20)
+listview:setNumberOfColumns(#menuOptions)
+listview:setCellPadding(0, 0, 13, 10)
+listview:setContentInset(24, 24, 13, 11)
+
+function listview:drawCell(section, row, column, selected, x, y, width, height)
+     
+    if selected then
+                gfx.fillRoundRect(x, y, width, 20, 4)
+                playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillWhite)
+                gfx.drawTextInRect(tostring(menuOptions[column]), x, y+2, width, height, nil, "...", kTextAlignment.center)
+        
+            else
+                playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillBlack)
+                gfx.drawRoundRect(x, y, width, 20, 4)
+                gfx.drawTextInRect(tostring(menuOptions[column]), x, y+2, width, height, nil, "...", kTextAlignment.center)
+            end
+       
+end
 
 local testInputHandlers = {
-    AButtonDown = function()
-         drawlifecounter(200, 190, 0,0.9, "Pia", debuglife, {debugCommanderDamege,0,4,0}) 
+    AButtonDown = function()    
+        -- drawlifecounter(posconfigs[1].2.x, , debuglife, {debugCommanderDamege,0,4}) 
          debuglife = debuglife +7
          debugCommanderDamege = debugCommanderDamege + 1
-        end
+        end,
+    downButtonDown = function() 
+        listview:selectNextColumn(true)
+    end
 }
 
+--drawlifecounter(posconfigs[3][1], "P1", debuglife, {debugCommanderDamege,0,4})
+--drawlifecounter(posconfigs[3][2], "P2", debuglife, {debugCommanderDamege,0,4})
+
 playdate.inputHandlers.push(testInputHandlers)
+
 function playdate.update()
 
+    gfx.clear()
+    listview:drawInRect(0,0,400,240)
+    playdate.timer:updateTimers()
+    
 end
 
 
