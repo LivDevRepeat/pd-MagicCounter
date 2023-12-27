@@ -1,0 +1,7 @@
+name=Magic Counter
+author=LivDevRepeat
+description=This is a Playdate game.
+bundleID=com.livdevrepeat.MagicCounter
+version=0.5
+imagePath=launcher/
+buildNumber=1082
