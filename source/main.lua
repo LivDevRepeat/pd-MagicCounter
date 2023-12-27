@@ -27,6 +27,7 @@ menu:addMenuItem("New Game", function() Reset() end)
 import "scripts/data"
 import "scripts/graphics"
 
+
 -- PlayerController Class
 local pc = PlayersController.new()
 pc.AddPlayer(40, "Pia")
@@ -78,15 +79,27 @@ local tableType = {
 }
 
 
-drawlifecounter(200, 190, 0,0.9, "Pia", 1200, false)
-drawlifecounter(350, 120, 270, 0.9,"Pia", "4", false)
-drawlifecounter(200, 50, 180,0.9, "Pia", "40", false)
-drawlifecounter(50, 120, 90,0.9, "Pia", "40", false)
+drawlifecounter(200, 190, 0,0.9, "Pia", 120, {})
+drawlifecounter(350, 120, 270, 0.9,"Pia", 40, {})
+drawlifecounter(200, 50, 180,0.9, "Pia", 4, {})
+drawlifecounter(50, 120, 90,0.9, "Pia", 40, {})
 
+local debuglife = 40
+local debugCommanderDamege = 67
+
+local testInputHandlers = {
+    AButtonDown = function()
+         drawlifecounter(200, 190, 0,0.9, "Pia", debuglife, {debugCommanderDamege,0,4,0}) 
+         debuglife = debuglife +7
+         debugCommanderDamege = debugCommanderDamege + 1
+        end
+}
+
+playdate.inputHandlers.push(testInputHandlers)
 function playdate.update()
-    -- Update game logic here
 
 end
+
 
 
 

@@ -1,4 +1,4 @@
-playdate.inputHandlers.push(baseInputHandlers)-- Input Handlers
+
 local selectedDirInputHandlers = {
     AButtonDown = function() ChangeLife(a_sign, currentDirection) end,
     BButtonDown = function() ChangeLife(b_sign, currentDirection) end,
@@ -16,6 +16,7 @@ local baseInputHandlers = {
     AButtonDown = function() cycleView() end,
     BButtonDown = function() cylcelMode() end,
 }
+
 
 
 
