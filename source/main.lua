@@ -165,10 +165,3 @@ function playdate.update()
     vc.UpdateCurrentView()
     
 end
-
-
-
-
-
-
-
