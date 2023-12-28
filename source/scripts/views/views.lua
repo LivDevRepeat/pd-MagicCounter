@@ -8,7 +8,7 @@ ViewsController.new = function()
     function self.AddView(name, setUp, onUpdate)
         local Views = self.Views
         Views[#Views + 1] = {name = name, setUp = setUp, onUpdate = onUpdate}
-        print("View " .. #Views .. " added")
+        print("View " .. name .. " added")
     end
 
     function self.SetCurrentView(view)

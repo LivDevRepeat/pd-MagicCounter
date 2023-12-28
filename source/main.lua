@@ -31,7 +31,9 @@ menu:addOptionsMenuItem("Player", {1,2,3,4}, 1, function(value)
 
 import "scripts/data"
 import "scripts/graphics"
-import "scripts/views"
+import "scripts/views/views"
+
+
 
 
 -- PlayerController Class
@@ -64,7 +66,7 @@ end
 
 playercount = 2
 
-local posconfigs = {
+posconfigs = {
     -- Table type 1: 4 Players Round
     {
         {x = 200, y = 190, angle = 0, scale = 1},
@@ -86,65 +88,23 @@ local posconfigs = {
     },
 }
 
-local debuglife = 40
-local debugCommanderDamege = 20
 
 
+vc = ViewsController.new()
 
-
-
-local menuOptions = { 1,2,3,4}
-local listview = playdate.ui.gridview.new(50,50)
-listview:setNumberOfColumns(#menuOptions)
-listview:setNumberOfRows(1)
-listview:setCellPadding(0, 0, 13, 10)
-listview:setContentInset(24, 24, 13, 11)
-
-function listview:drawCell(section, row, column, selected, x, y, width, height)
-     
-    if selected then
-        gfx.fillRoundRect(x, y, width, 20, 4)
-        playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillWhite)
-        gfx.drawTextInRect(tostring(menuOptions[column]), x, y+2, width, height, nil, "...", kTextAlignment.center)
-
-    else
-        playdate.graphics.setImageDrawMode(playdate.graphics.kDrawModeFillBlack)
-        gfx.drawRoundRect(x, y, width, 20, 4)
-        gfx.drawTextInRect(tostring(menuOptions[column]), x, y+2, width, height, nil, "...", kTextAlignment.center)
-    end
-       
-end
-
-
-
-
-
-local vc = ViewsController.new()
-vc.AddView("main", function() end,function()mainUpdate() end)
-vc.AddView("test", function()debugTwoplayerUpdate() end, function() end)
+-- Import Views
+import "scripts/views/menuView"
+import "scripts/views/gameView"
 vc.SetCurrentView(1)
 
 
 
-function mainUpdate()
-    gfx.clear()
-    listview:drawInRect(0, 0, 400, 240)
-    playdate.timer:updateTimers()
-end
-
-
-function debugTwoplayerUpdate()
-    gfx.clear()
-    drawlifecounter(posconfigs[3][1], "P1", debuglife, {debugCommanderDamege,0,4})
-    drawlifecounter(posconfigs[3][2], "P2", debuglife, {debugCommanderDamege,0,4})
-end
 
 
 local testInputHandlers = {
     AButtonDown = function()    
-        -- drawlifecounter(posconfigs[1].2.x, , debuglife, {debugCommanderDamege,0,4}) 
-         debuglife = debuglife +7
-         debugCommanderDamege = debugCommanderDamege + 1
+        debuglife = debuglife +7
+        debugCommanderDamege = debugCommanderDamege + 1
         end,
     downButtonDown = function() 
         vc.CycleView()
@@ -156,12 +116,8 @@ local testInputHandlers = {
     end
 }
 
---drawlifecounter(posconfigs[3][1], "P1", debuglife, {debugCommanderDamege,0,4})
---drawlifecounter(posconfigs[3][2], "P2", debuglife, {debugCommanderDamege,0,4})
-
 playdate.inputHandlers.push(testInputHandlers)
 
 function playdate.update()
     vc.UpdateCurrentView()
-    
 end
