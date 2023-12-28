@@ -1,7 +1,7 @@
 local gfx <const> = playdate.graphics
 
-local debuglife = 40
-local debugCommanderDamege = 20
+debuglife = 40
+debugCommanderDamege = 20
 
 function debugTwoplayerUpdate()
     gfx.clear()

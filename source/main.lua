@@ -34,14 +34,10 @@ import "scripts/graphics"
 import "scripts/views/views"
 
 
-
-
 -- PlayerController Class
 local pc = PlayersController.new()
-pc.AddPlayer(40, "Pia")
-pc.AddPlayer(40, "Lina")
-
-
+pc.AddPlayer(40, "Player 1")
+pc.AddPlayer(40, "Player 2")
 
 -- Load game data
 local gameData = playdate.datastore.read()
@@ -105,6 +101,7 @@ local testInputHandlers = {
     AButtonDown = function()    
         debuglife = debuglife +7
         debugCommanderDamege = debugCommanderDamege + 1
+        drawlifecounter(posconfigs[3][1], "P1", debuglife, {debugCommanderDamege,0,4})
         end,
     downButtonDown = function() 
         vc.CycleView()
