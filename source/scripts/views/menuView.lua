@@ -8,6 +8,8 @@ listview:setNumberOfRows(1)
 listview:setCellPadding(0, 0, 13, 10)
 listview:setContentInset(24, 24, 13, 11)
 
+
+
 function listview:drawCell(section, row, column, selected, x, y, width, height)
      
     if selected then

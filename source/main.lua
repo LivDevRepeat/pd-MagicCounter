@@ -113,7 +113,7 @@ local debugInputHandlers = {
     end
 }
 
-playdate.inputHandlers.push(debugInputHandlers)
+--playdate.inputHandlers.push(debugInputHandlers)
 
 function playdate.update()
     vc.UpdateCurrentView()

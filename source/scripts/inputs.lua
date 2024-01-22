@@ -20,6 +20,9 @@ local baseInputHandlers = {
 
 
 
+
+
+
 function ResetCurrentDirection()
     playdate.inputHandlers.pop()
     currentDirection = 0
