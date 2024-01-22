@@ -90,18 +90,18 @@ vc = ViewsController.new()
 
 -- Import Views
 import "scripts/views/menuView"
-import "scripts/views/gameView"
-vc.SetCurrentView(1)
+import "scripts/views/2PlayerView"
+vc.SetCurrentView(2)
 
 
 
 
 
-local testInputHandlers = {
+local debugInputHandlers = {
     AButtonDown = function()    
         debuglife = debuglife +7
         debugCommanderDamege = debugCommanderDamege + 1
-        drawlifecounter(posconfigs[3][1], "P1", debuglife, {debugCommanderDamege,0,4})
+        drawlifecounter(posconfigs[1][1], "P1", debuglife, {debugCommanderDamege,0,4})
         end,
     downButtonDown = function() 
         vc.CycleView()
@@ -113,7 +113,7 @@ local testInputHandlers = {
     end
 }
 
-playdate.inputHandlers.push(testInputHandlers)
+playdate.inputHandlers.push(debugInputHandlers)
 
 function playdate.update()
     vc.UpdateCurrentView()

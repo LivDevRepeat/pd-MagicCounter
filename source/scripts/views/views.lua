@@ -13,6 +13,8 @@ ViewsController.new = function()
 
     function self.SetCurrentView(view)
         self.CurrentView = view
+        self.SetUpCurrentView()
+
     end
 
     function self.UpdateCurrentView()
@@ -36,8 +38,6 @@ ViewsController.new = function()
             self.SetCurrentView(CurrentView + 1)
             
         end
-
-        self.SetUpCurrentView()
     end
 
 

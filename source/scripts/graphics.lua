@@ -6,7 +6,7 @@ local twoCharWidth = newfont:getTextWidth("00")
 
 
 
-function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage)
+function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSelected)
    
     -- Images
     local rotate = gfx.image.new(200, 121)
@@ -18,14 +18,8 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage)
 
         
         gfx.setColor(gfx.kColorBlack)
-
-        -- Dither Background
         gfx.pushContext(mainImage)
-            gfx.pushContext()
-                gfx.setColor(gfx.kColorBlack)
-                gfx.setDitherPattern(0.75, gfx.image.kDitherTypeDiagonalLine)
-              --  gfx.fillRect(rect)
-            gfx.popContext()
+         
         
 
             -- Text
@@ -42,7 +36,17 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage)
                 gfx.setColor(gfx.kColorWhite)
                 gfx.fillRect(0,0,190,100)
             gfx.popContext()
-          
+
+            -- Dither Background if selected
+            if( isSelected == true) then 
+            gfx.pushContext()
+                gfx.setStrokeLocation(gfx.kStrokeInside)
+                gfx.setColor(gfx.kColorBlack)
+                gfx.setDitherPattern(0.75, gfx.image.kDitherTypeDiagonalLine)
+                gfx.fillRect(rect)
+            gfx.popContext()
+            end
+            
             gfx.pushContext(textImage)
                 gfx.setFont(newfont)
                 gfx.drawTextInRect(tostring(lifecounter),textRect, nil, nil, kTextAlignment.center)  
