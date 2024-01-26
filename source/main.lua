@@ -24,10 +24,10 @@ playdate.setAutoLockDisabled(true)
 local menu = playdate.getSystemMenu()
 menu:addMenuItem("New Game", function() Reset() end)
 
-menu:addOptionsMenuItem("Player", {1,2,3,4}, 1, function(value)
-    print(value)
-   end
-   )
+--menu:addOptionsMenuItem("Player", {1,2,3,4}, 1, function(value)
+  --  print(value)
+  -- end
+   --)
 
 import "scripts/data"
 import "scripts/graphics"
@@ -35,9 +35,14 @@ import "scripts/views/views"
 
 
 -- PlayerController Class
-local pc = PlayersController.new()
-pc.AddPlayer(40, "Player 1")
-pc.AddPlayer(40, "Player 2")
+pc = PlayersController.new()
+--pc.AddPlayer(40, "Player 2",{ {commanderID = 3, damage = 0}, {commanderID = 4, damage = 0}, {commanderID = 1, damage = 0}})
+--pc.AddPlayer(40, "Player 3",{ {commanderID = 4, damage = 0}, {commanderID = 1, damage = 0}, {commanderID = 2, damage = 0}})
+--pc.AddPlayer(40, "Player 4",{ {commanderID = 1, damage = 0}, {commanderID = 2, damage = 0}, {commanderID = 3, damage = 0}})
+--pc.AddPlayer(40, "Player 1",{ {commanderID = 2, damage = 0}, {commanderID = 3, damage = 0}, {commanderID = 4, damage = 0}})
+
+pc.AddNumberOfPlayers(4, 40)
+
 
 -- Load game data
 local gameData = playdate.datastore.read()
@@ -60,7 +65,7 @@ function playdate.gameWillSleep()
     saveGameData()
 end
 
-playercount = 2
+
 
 posconfigs = {
     -- Table type 1: 4 Players Round
@@ -72,17 +77,20 @@ posconfigs = {
     },
     -- Table type 2: 4 Players Square
     {
-        {x = 100, y = 190, angle = 0, scale = 1},
-        {x = 300, y = 190, angle = 0, scale = 1},
-        {x = 300, y = 50, angle = 180, scale = 1},
-        {x = 100, y = 50, angle = 180, scale = 1},
+        {x = 100, y = 190, angle = 0, scale = 1.04},
+        {x = 300, y = 190, angle = 0, scale = 1.04},
+        {x = 300, y = 50, angle = 180, scale = 1.04},
+        {x = 100, y = 50, angle = 180, scale = 1.04},
     },
     -- Table type 3: 2 Players
     {
         {x = 322, y = 120, angle = 270, scale = 1.3},
         {x = 78, y = 120, angle = 90, scale = 1.3},
+        {x = 322, y = 120, angle = 270, scale = 0},
+        {x = 78, y = 120, angle = 90, scale = 0},
     },
 }
+
 
 
 
@@ -96,22 +104,6 @@ vc.SetCurrentView(2)
 
 
 
-
-local debugInputHandlers = {
-    AButtonDown = function()    
-        debuglife = debuglife +7
-        debugCommanderDamege = debugCommanderDamege + 1
-        drawlifecounter(posconfigs[1][1], "P1", debuglife, {debugCommanderDamege,0,4})
-        end,
-    downButtonDown = function() 
-        vc.CycleView()
-    end,
-
-    rightButtonDown = function() 
-
-        listview:selectNextColumn(true)
-    end
-}
 
 --playdate.inputHandlers.push(debugInputHandlers)
 
