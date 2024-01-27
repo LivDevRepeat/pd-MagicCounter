@@ -1,8 +1,10 @@
  PlayersController = {}
-PlayersController.new = function()
+PlayersController.new = function( playercount, startlife)
     local self = {}
 
      self.Players = {}
+
+    
     
      -- SetUpFunctions
     function self.AddPlayer(startlife, label)
@@ -14,17 +16,13 @@ PlayersController.new = function()
 
     function self.AddCommanderDamageTable(player)
         self.Players[player].cdTable = {}
-        index = 1
-        for i = 1, #self.Players do
-            if( i == player) then
-                print("Skip self")
-                -- self.Players[player].cdTable[i] = {commanderID = i, damage = 0}
-            else
-                self.Players[player].cdTable[index] = {commanderID = i, damage = 0}
-                index = index + 1
-                print("Add Commander " .. i .. " to Player " .. player)
+
+            local cdTable = self.Players[player].cdTable
+            local CommanderID = self.GetNextCommander(player)
+            for i = 1, #self.Players do
+                cdTable[i]={commanderID = CommanderID, damage = 0}
+                CommanderID = self.GetNextCommander(CommanderID)
             end
-        end
 
         print(#self.Players[player].cdTable .. " Commanders added to Player " .. player    )
 
@@ -43,6 +41,17 @@ PlayersController.new = function()
         end
 
         self.AddCommanderDamageTables()
+    end
+
+    -- Helpers
+    
+
+    function self.GetNextCommander(player)
+        if(player == #self.Players) then
+            return 1
+        else
+            return player + 1
+        end
     end
 
     -- Getters
@@ -70,12 +79,12 @@ PlayersController.new = function()
     end
 
     function self.increaseCommanderDamage(player, target)
-        self.Players[player].cdTable[target] = self.Players[player].cdTable[target] + 1
+        self.Players[player].cdTable[target].damage = self.Players[player].cdTable[target].damage + 1
     end
 
 
    
-
+     self.AddNumberOfPlayers(playercount, startlife)
 
     return self
 end

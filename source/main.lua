@@ -35,13 +35,11 @@ import "scripts/views/views"
 
 
 -- PlayerController Class
-pc = PlayersController.new()
+pc = PlayersController.new(4,40)
 --pc.AddPlayer(40, "Player 2",{ {commanderID = 3, damage = 0}, {commanderID = 4, damage = 0}, {commanderID = 1, damage = 0}})
 --pc.AddPlayer(40, "Player 3",{ {commanderID = 4, damage = 0}, {commanderID = 1, damage = 0}, {commanderID = 2, damage = 0}})
 --pc.AddPlayer(40, "Player 4",{ {commanderID = 1, damage = 0}, {commanderID = 2, damage = 0}, {commanderID = 3, damage = 0}})
 --pc.AddPlayer(40, "Player 1",{ {commanderID = 2, damage = 0}, {commanderID = 3, damage = 0}, {commanderID = 4, damage = 0}})
-
-pc.AddNumberOfPlayers(4, 40)
 
 
 -- Load game data

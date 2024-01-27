@@ -38,12 +38,12 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSele
             -- Dither Background if selected
             if( isSelected == true) then 
             gfx.pushContext()
-                gfx.setStrokeLocation(gfx.kStrokeInside)
                 gfx.setColor(gfx.kColorBlack)
                 gfx.setDitherPattern(0.75, gfx.image.kDitherTypeDiagonalLine)
                 gfx.fillRoundRect(rect,mainImageRound)
             gfx.popContext()
             end
+
             
             -- Text
             gfx.pushContext(textImage)
@@ -58,18 +58,19 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSele
 
             -- Border
             gfx.pushContext()
-                if( isSelected == false ) then
+                if( isHighlighted == false ) then
                     gfx.setDitherPattern(0.75, gfx.image.kDitherTypeDiagonalLine)
                     gfx.setLineWidth(4)
                 else
                     gfx.setLineWidth(6)
                 end
-                gfx.setStrokeLocation(gfx.kStrokeInside)
                
                 gfx.drawRoundRect(rect,mainImageRound)
             gfx.popContext()
       
         gfx.popContext()
+   
+
 
    
         -- Text
@@ -77,10 +78,10 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSele
  
        -- Bubbles 
 
-        local bubbleWidth = 60
+        local bubbleWidth = 45
         local bubbleHeight = 28
         local bubbleOffset = 8
-        local bubbleInset = 4.0
+        local bubbleInset = 3
         local bubble =  gfx.image.new(190,bubbleHeight)
 
         gfx.pushContext(bubble)
@@ -88,55 +89,45 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSele
                
                 local bubbleRect = geo.rect.new(5+(bubbleWidth*(i-1)), bubbleOffset,bubbleWidth, bubbleHeight)
                 gfx.setLineWidth(2)
-                if( commanderdamage[i].damage > 0) then
-                gfx.pushContext()
+                gfx.setStrokeLocation(gfx.kStrokeInside)
+                bubbleRect:inset(1,0)
+
+                if( commanderdamage[i].damage >= 0) then
+                    gfx.pushContext()
+                        gfx.setColor(gfx.kColorWhite)
+                        gfx.fillRect(bubbleRect)
+                        gfx.drawRoundRect(bubbleRect,5)
+                    gfx.popContext()
+
                     
-                    gfx.setStrokeLocation(gfx.kStrokeOutside)
-                    gfx.setColor(gfx.kColorWhite)
-                    gfx.fillRect(bubbleRect)
-                    gfx.drawRoundRect(bubbleRect,5)
-                gfx.popContext()
 
-                
+                    gfx.pushContext()
+                    
+                        gfx.setStrokeLocation(gfx.kStrokeInside)
+            
+                            if( i == selectedCommander) and isSelected == true then
+                            
+                            -- gfx.setDitherPattern(0.8, gfx.image.kDitherTypeDiagonalLine)
+                            
+                            else
+                                gfx.setDitherPattern(0.8, gfx.image.kDitherTypeDiagonalLine)
+                            end
 
-                gfx.pushContext()
-                
-                    gfx.setStrokeLocation(gfx.kStrokeInside)
-                    gfx.setDitherPattern(0.8, gfx.image.kDitherTypeDiagonalLine)
-                    gfx.drawRoundRect(bubbleRect,5)
-                    bubbleRect:inset(0, bubbleInset)
-                    gfx.drawTextInRect(tostring(commanderdamage[i].damage), bubbleRect, nil, nil, kTextAlignment.center)
-                
+                            gfx.drawRoundRect(bubbleRect,5)
+                            bubbleRect:inset(0, bubbleInset)
+                            gfx.drawTextInRect(tostring(commanderdamage[i].damage), bubbleRect, nil, nil, kTextAlignment.center)
                     gfx.popContext()
                 end
+                
             end
         gfx.popContext()
-        bubble:draw(5,0)
+        bubble:draw(0,3)
 
-        gfx.pushContext(bubble)
-        for i = 1, #commanderdamage do
-            if( i == selectedCommander) then
-                gfx.setColor(gfx.kColorBlack)
-         
-           
-            local bubbleRect = geo.rect.new(5+(bubbleWidth*(i-1)), 5,bubbleWidth, bubbleHeight)
-
-            gfx.pushContext()
-                gfx.setLineWidth(2)
-                gfx.setStrokeLocation(gfx.kStrokeInside)
-                gfx.drawRoundRect(bubbleRect,5)
-                bubbleRect:inset(0, 5)
-                gfx.drawTextInRect(tostring(commanderdamage[i].damage), bubbleRect, nil, nil, kTextAlignment.center)
-               
-            gfx.popContext()
-        end
-        end
-    gfx.popContext()
-    bubble:draw(5,0)
+  
    
 
-    mainImage:draw(5,30)
 
+    mainImage:draw(5,30)
     gfx.popContext()
 
    
