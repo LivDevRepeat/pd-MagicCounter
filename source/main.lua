@@ -29,6 +29,11 @@ menu:addMenuItem("New Game", function() Reset() end)
   -- end
    --)
 
+function Reset ()
+    pc = PlayersController.new(4,40)
+    vc.SetCurrentView(2)
+end   
+
 import "scripts/data"
 import "scripts/graphics"
 import "scripts/views/views"
@@ -75,10 +80,10 @@ posconfigs = {
     },
     -- Table type 2: 4 Players Square
     {
-        {x = 100, y = 190, angle = 0, scale = 1.04},
-        {x = 300, y = 190, angle = 0, scale = 1.04},
-        {x = 300, y = 50, angle = 180, scale = 1.04},
-        {x = 100, y = 50, angle = 180, scale = 1.04},
+        {x = 100, y = 190, angle = 0, scale = 1},
+        {x = 300, y = 190, angle = 0, scale = 1},
+        {x = 300, y = 50, angle = 180, scale = 1},
+        {x = 100, y = 50, angle = 180, scale = 1},
     },
     -- Table type 3: 2 Players
     {

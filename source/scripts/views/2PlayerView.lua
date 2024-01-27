@@ -50,7 +50,6 @@ cycleView = function()
     if(currentViewMode > max) then
         currentViewMode = 1
     end
-    print(currentViewMode)
     setUpView()
 end
 
@@ -106,9 +105,13 @@ function ResetCurrentDirection(i)
     clearTimerDraw()
 
     currentCalcMode = 1
+    currentHighlightedPlayer = 0 
+    commandMode = 0
 
     playdate.inputHandlers.pop()
-    drawlifecounter(posconfigs[currentViewMode][i], "P" .. tostring(i), pc.GetPlayerLife(i),pc.Players[i].cdTable,false,false,0)
+    for i = #pc.Players, 1, -1 do
+        drawlifecounter(posconfigs[currentViewMode][i], "P" .. tostring(i), pc.GetPlayerLife(i),pc.Players[i].cdTable,false,false,0)
+    end
     currentDirection = 0
 end
 

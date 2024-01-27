@@ -28,6 +28,9 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSele
             local textImage = gfx.image.new(190*reverseScale, 80)
             local textRect = geo.rect.new(0,0, 190*reverseScale, 80)
             local mainImageRound = 0
+
+            gfx.setLineWidth(2)
+            gfx.setStrokeLocation(gfx.kStrokeInside)
             
             -- Clear Draw    
             gfx.pushContext()
