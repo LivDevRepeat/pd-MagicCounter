@@ -92,12 +92,14 @@ function drawlifecounter(posconfig,labelText, lifecounter,commanderdamage,isSele
                 gfx.setStrokeLocation(gfx.kStrokeInside)
                 bubbleRect:inset(1,0)
 
-                if( commanderdamage[i].damage >= 0) then
-                    gfx.pushContext()
-                        gfx.setColor(gfx.kColorWhite)
-                        gfx.fillRect(bubbleRect)
-                        gfx.drawRoundRect(bubbleRect,5)
-                    gfx.popContext()
+                gfx.pushContext()
+                gfx.setColor(gfx.kColorWhite)
+                gfx.fillRect(bubbleRect)
+                gfx.drawRoundRect(bubbleRect,5)
+                gfx.popContext()
+
+                if( commanderdamage[i].damage > 0) or  ( i == selectedCommander and isSelected == true) then
+                
 
                     
 
